@@ -70,7 +70,7 @@ class Main(object):
         # Resolution doesn't change. Send it once
         glUniform2f(glGetUniformLocation(self.shader, 'iResolution'), *self.resolution)
         
-        # Create Vertex Buffer
+        # Create the fullscreen quad for drawing
         self.vertices = array([-1.0, -1.0, 0.0,
                                 1.0, -1.0, 0.0,
                                 1.0,  1.0, 0.0,
@@ -106,7 +106,7 @@ class Main(object):
 
             glDrawArrays(GL_QUADS, 0, 4)
 
-            glDisableVertexAttribArray(0)
+            glDisableVertexAttribArray(0) # Optional
 
             pygame.display.set_caption("FPS: {}".format(self.clock.get_fps()))
             pygame.display.flip()

@@ -22,6 +22,9 @@ void main()
 }
 """
 
+# https://www.iquilezles.org/www/articles/distfunctions/distfunctions.htm
+# https://github.com/PistonDevelopers/shaders/wiki/Some-useful-GLSL-functions
+
 FRAGMENT_SHADER = """
 #version 330 core
 
@@ -180,7 +183,7 @@ class Main(object):
 
             glDrawArrays(GL_QUADS, 0, 4)
 
-            glDisableVertexAttribArray(0)
+            glDisableVertexAttribArray(0)   # Optional
 
             pygame.display.set_caption("FPS: {}".format(self.clock.get_fps()))
             pygame.display.flip()

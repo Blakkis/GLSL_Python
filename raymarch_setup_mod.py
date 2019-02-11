@@ -22,6 +22,9 @@ void main()
 }
 """
 
+# https://www.iquilezles.org/www/articles/distfunctions/distfunctions.htm
+# https://github.com/PistonDevelopers/shaders/wiki/Some-useful-GLSL-functions
+
 FRAGMENT_SHADER = """
 #version 330 core
 
@@ -32,9 +35,6 @@ uniform float iTime;
 uniform vec2  iResolution;
 
 out vec4 fragColor;
-
-// https://www.iquilezles.org/www/articles/distfunctions/distfunctions.htm
-// https://github.com/PistonDevelopers/shaders/wiki/Some-useful-GLSL-functions
 
 float sdSphere(vec3 p, float r)
 {
