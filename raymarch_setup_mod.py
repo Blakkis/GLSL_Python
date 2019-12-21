@@ -1,3 +1,11 @@
+# Note: There was old version which was done wrongly long time ago
+#       Ive noticed a few people using this lately and wanted to fix this
+#       
+#
+#       This is the fixed version where both "vao" and "vbo" are created
+#       Everything else is the same
+
+
 from __future__ import division
 import pygame
 from pygame.locals import *
@@ -141,15 +149,23 @@ class Main(object):
         self.uni_resolution = glGetUniformLocation(self.shader, 'iResolution')
         glUniform2f(self.uni_resolution, *self.resolution)
         
-        # Create fullscreen quad
+        # Create the fullscreen quad for drawing
         self.vertices = array([-1.0, -1.0, 0.0,
                                 1.0, -1.0, 0.0,
                                 1.0,  1.0, 0.0,
                                -1.0,  1.0, 0.0], dtype='float32')
 
-        self.vertexbuffer = glGenBuffers(1)
-        glBindBuffer(GL_ARRAY_BUFFER, self.vertexbuffer)
+        # Generate VAO
+        self.vao = glGenVertexArrays(1)
+        glBindVertexArray(self.vao)
+
+        # Generate VBO which is stored in the VAO state
+        self.vbo = glGenBuffers(1)
+        glBindBuffer(GL_ARRAY_BUFFER, self.vbo)
         glBufferData(GL_ARRAY_BUFFER, self.vertices, GL_STATIC_DRAW)
+
+        glEnableVertexAttribArray(0)
+        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, None)
 
         self.clock = pygame.time.Clock()
 
@@ -179,14 +195,9 @@ class Main(object):
             glUniform2f(self.uni_mouse, mx, my)
             glUniform1f(self.uni_ticks, pygame.time.get_ticks() / 1000.0)
 
-            # Enable Vertex arrays
-            glEnableVertexAttribArray(0)
-            glBindBuffer(GL_ARRAY_BUFFER, self.vertexbuffer)
-            glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, None)
-
+            # Bind the vao (which stores the VBO with all the vertices)
+            glBindVertexArray(self.vao)
             glDrawArrays(GL_QUADS, 0, 4)
-
-            glDisableVertexAttribArray(0)
 
             pygame.display.set_caption("FPS: {}".format(self.clock.get_fps()))
             pygame.display.flip()
