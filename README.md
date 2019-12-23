@@ -11,3 +11,6 @@ contains minimal setup for playing around with raymarch (Sphere with light follo
 
 # raymarch_setup_mod.py 
 contains the same as above but few modifications (Displacements)
+
+# By request a multipass setup
+render to texture and use that texture as part of second shader program
